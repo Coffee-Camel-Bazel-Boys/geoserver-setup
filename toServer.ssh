@@ -1,0 +1,15 @@
+#!/bin/bash
+source secrets.prod
+
+geoserver="bazel-bin/geoserver/tarball.tar"
+bazelisk build geoserver --define prod=true
+
+scp $geoserver $sshCred:geoserver.tar
+scp $geoserver $sshCred:docker-compose.geoserver.yml 
+
+ssh $sshCred << EOF
+    docker load -i geoserver.tar
+    echo "Loaded in the tar \n"
+    docker-compose -f docker-compose.geoserver.yml up
+    echo "done! \n"
+EOF

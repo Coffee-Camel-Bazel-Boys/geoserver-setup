@@ -4,4 +4,4 @@ bazel-*
 Secrets.prod.go
 
 
-toServer.ssh
+secrets.prod
