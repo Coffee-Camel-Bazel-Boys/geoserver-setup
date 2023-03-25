@@ -1,4 +1,4 @@
-bazelbazel-*
-__pycache__
+bazel-*
+
 .vscode
 Secrets.prod.go

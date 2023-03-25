@@ -1,3 +1,5 @@
+package mapController
+
 const (
 	POSTGRES_PASSWORD = "test1"
 	HOST = "127.0.0.1"

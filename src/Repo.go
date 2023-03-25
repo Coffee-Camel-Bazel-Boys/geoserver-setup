@@ -81,57 +81,6 @@ func GetParcelData(bbox []string) []Feature {
 	return parcels;
 }
 
-
-func GetCrimeData(bbox []string) []Feature {
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-    "password=%s dbname=%s sslmode=disable",
-	HOST, PORT, USER, POSTGRES_PASSWORD, DATABASE);
-	
-	db, err := sql.Open("postgres", psqlInfo)
-	if err != nil {
-		panic(err);
-	}
-
-	// FIXME, cleanup
-	b0, err := strconv.ParseFloat(bbox[0], 64); 
-	b1, err := strconv.ParseFloat(bbox[1], 64); 
-	b2, err := strconv.ParseFloat(bbox[2], 64); 
-	b3, err := strconv.ParseFloat(bbox[3], 64);
-
-	rows, err := db.Query(crimeMapQuery, b0, b1, b2, b3);
-
-	if (err != nil) {
-	  panic(err);
-	}
-	defer rows.Close();
-
-	var crimeFeatures []Feature;
-	for rows.Next() {
-		var ogc_fid string;
-		var geometry []byte;
-		var boundary string;
-		var data []byte;
-		var communityName string;
-
-		err := rows.Scan(&ogc_fid, &geometry, &boundary, &data, &communityName);
-		if (err != nil) {
-			// FIXME
-			panic(err);
-		}
-
-		crimeFeatures = append(crimeFeatures, getFeature(ogc_fid, geometry, getDataValue(data)));
-	}
-
-	err = rows.Err()
-	if err != nil {
-	  panic(err)
-	}
-
-	db.Close();
-
-	return crimeFeatures;
-}
-
 func getFeature(ogc_fid string, geometry []byte, data map[string]interface{}) Feature {
 	var typedGeometry Geometry;
 	json.Unmarshal(geometry, &typedGeometry);

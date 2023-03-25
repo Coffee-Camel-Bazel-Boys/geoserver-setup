@@ -83,7 +83,7 @@ func geoData(geoRequest GeoRequest) []byte {
 
 func getSection(geoRequest GeoRequest) []Feature {
 	if(geoRequest.typeName == "parcel") {
-		return geoData(geoRequest.bbox);
+		return GetParcelData(geoRequest.bbox);
 	}
 	// FIXME, 404
 	return nil;
