@@ -9,7 +9,7 @@ import(
 
 func main() {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", mapController.HandleRequest);
+	mux.HandleFunc("/geo", mapController.HandleRequest);
 
 	handler := cors.Default().Handler(mux)
 	http.ListenAndServe(":6001", handler);
