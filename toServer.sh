@@ -13,6 +13,6 @@ ssh $sshCred << EOF
     docker image rm -f geoserver
     docker load -i geoserver/geoserver.tar
     echo "Loaded in the tar \n"
-    docker run -itd --network=garden-land -expose=6001:6001 --name geo geoserver
+    docker run -itd --network=garden-land -p 6001:6001 --name geo geoserver
     echo "done! \n"
 EOF
