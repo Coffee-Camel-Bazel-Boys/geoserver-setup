@@ -5,6 +5,7 @@ go_library(
     name = "mapControllerGo",
     srcs = [
       "MapController.go",
+      "//:goSecrets",
       "Repo.go"  
     ],
     importpath = "mapController",

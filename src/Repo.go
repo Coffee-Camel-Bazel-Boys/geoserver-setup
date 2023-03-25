@@ -26,22 +26,12 @@ type Geometry struct {
 const parcelQuery = `SELECT ogc_fid, 
 						ST_AsGeoJSON(wkb_geometry) AS geometry,
 						b.boundary
-					FROM regina_parcel, 
+					FROM LOT_TABLE_NAME, 
 						(select ST_MakeEnvelope($1,$2,$3,$4)::geography AS boundary) as b
 					WHERE ST_DWITHIN(wkb_geometry, boundary, 0);`;
 
-const crimeMapQuery = `SELECT 
-						ogc_fid, 
-						ST_AsGeoJSON(wkb_geometry) AS geometry,
-						b.boundary,
-						row_to_json(crime_statistics) AS data,
-						community.name
-					FROM community
-						LEFT JOIN crime_statistics ON community.name = crime_statistics.community,
-							(select ST_MakeEnvelope($1,$2,$3,$4)::geography AS boundary) as b
-						WHERE ST_DWITHIN(wkb_geometry, boundary, 0)`;
-
 func GetParcelData(bbox []string) []Feature {
+	
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
     "password=%s dbname=%s sslmode=disable",
 	HOST, PORT, USER, POSTGRES_PASSWORD, DATABASE);
