@@ -20,3 +20,6 @@ to prod as tarball.tar
 
 3. run `docker load < tarball.tar`
 4. `docker run geoserver:latest`
+
+# Test locally
+http://127.0.0.1:6001/?service=WFS&version=1.1.0&request=GetFeature&typename=community&outputFormat=application/json&srsname=EPSG:3857&bbox=-1630949.8645041138,6199729.394767177,40614977.800791524,20354068.98252296,EPSG:3857
