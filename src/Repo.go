@@ -23,12 +23,13 @@ type Geometry struct {
 }
 
 // FIXME
-const parcelQuery = `SELECT ogc_fid, 
-						ST_AsGeoJSON(wkb_geometry) AS geometry,
-						b.boundary
-					FROM LOT_TABLE_NAME, 
-						(select ST_MakeEnvelope($1,$2,$3,$4)::geography AS boundary) as b
-					WHERE ST_DWITHIN(wkb_geometry, boundary, 0);`;
+const parcelQuery = `SELECT plot_id,
+		land_id,
+		shape::geometry,
+		b.boundary
+			FROM plot,
+				(select ST_MakeEnvelope($1,$2,$3,$4)::geography AS boundary) as b
+			WHERE ST_DWITHIN(shape::geometry, boundary, 0);`;
 
 func GetParcelData(bbox []string) []Feature {
 	
