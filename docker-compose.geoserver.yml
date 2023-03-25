@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   message-server:
     container_name: garden-land
@@ -6,8 +8,9 @@ services:
       - 6001:6001
     expose:
       - 6001
-  networks:
-    - garden-land
+    networks:
+      - garden-land
+
 networks:
   garden-land:
     name: garden-land
